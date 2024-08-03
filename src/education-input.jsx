@@ -6,6 +6,13 @@ function EducationInput({ addEducation, currentEducation }) {
   const [degree, setDegree] = useState("");
   const [date, setDate] = useState("");
 
+  // When the user clicks the "Edit" button in the EducationOutput component,
+  // currentEducation is updated in the parent (Layout).
+  // React re-renders the EducationInput component, and the useEffect hook runs
+  // because currentEducation has changed.
+  // This automatically fills the form with the selected education's data,
+  // allowing the user to edit it.
+
   useEffect(() => {
     if (currentEducation) {
       setSchoolName(currentEducation.schoolName);
@@ -36,15 +43,15 @@ function EducationInput({ addEducation, currentEducation }) {
   return (
     <div className="input-wrapper">
       <h2>Education info input:</h2>
-      <form method="post" className="generalInfoForm" onSubmit={handleSubmit}>
+      <form method="post" className="education-form" onSubmit={handleSubmit}>
         <div className="input-block">
           <label htmlFor="schoolName">School name: </label>
           <input
             type="text"
             name="schoolName"
             id="schoolName"
-            value={schoolName} // Bind the value to state
-            onChange={(e) => setSchoolName(e.target.value)}
+            value={schoolName}
+            onChange={(e) => setSchoolName(e.target.value)} // Update the state on each change
           />
         </div>
         <div className="input-block">
@@ -53,7 +60,7 @@ function EducationInput({ addEducation, currentEducation }) {
             type="text"
             name="degree"
             id="degree"
-            value={degree} // Bind the value to state
+            value={degree}
             onChange={(e) => setDegree(e.target.value)}
           />
         </div>
@@ -63,7 +70,7 @@ function EducationInput({ addEducation, currentEducation }) {
             type="date"
             name="dateFinish"
             id="dateFinish"
-            value={date} // Bind the value to state
+            value={date}
             onChange={(e) => setDate(e.target.value)}
           />
         </div>

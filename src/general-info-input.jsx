@@ -12,7 +12,7 @@ function GeneralInfoInput({ setName, setEmail, setPhone }) {
   return (
     <div className="input-wrapper">
       <h2>General info input:</h2>
-      <form method="post" className="generalInfoForm" onSubmit={handleSubmit}>
+      <form method="post" className="generalinfo-form" onSubmit={handleSubmit}>
         <div className="input-block">
           <label htmlFor="name">Name: </label>
           <input type="text" name="name" id="name" />
