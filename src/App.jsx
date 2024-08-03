@@ -1,8 +1,10 @@
 import { useState } from "react";
-import { Header } from "./cv_header-generalinfo";
-import { GeneralInfoInput } from "./general-info-input";
-import { EducationInput } from "./education-input";
-import { EducationOutput } from "./education-output";
+import { Header } from "./components/general-info-output";
+import { GeneralInfoInput } from "./components/general-info-input";
+import { EducationInput } from "./components/education-input";
+import { EducationOutput } from "./components/education-output";
+import { JobInput } from "./components/workexperience-input";
+import { JobOutput } from "./components/workexperience-output";
 
 import "./App.css";
 
@@ -50,15 +52,67 @@ function App() {
   };
 
   const editEducation = (education) => {
-    console.log(education);
     setCurrentEducation(education); // Set the education to be edited
   };
 
   const deleteEducation = (id) => {
     setEducations(educations.filter((education) => education.id !== id));
+    setCurrentEducation(null);
   };
 
-  console.log(educations);
+  // Job input states
+  const [jobs, setJobs] = useState([
+    {
+      companyName: "My company",
+      title: "CEO",
+      duty: "I did this and that...",
+      dateFrom: "2020-01-01",
+      dateTo: "2024-01-01",
+      id: 0,
+    },
+    {
+      companyName: "My company 2",
+      title: "CEO",
+      duty: "I did this and that...",
+      dateFrom: "2020-01-01",
+      dateTo: "2024-01-01",
+      id: 1,
+    },
+  ]);
+  const [currentJob, setCurrentJob] = useState(null); // State to hold the education being edited
+  const [nextJobId, setJobNextId] = useState(2); // Initial ID counter
+
+  const addJob = (job) => {
+    if (currentJob) {
+      // Update existing Job
+      setJobs(
+        jobs.map((j) =>
+          j.id === currentJob.id ? { ...job, id: currentJob.id } : j
+        )
+      );
+      setCurrentJob(null); // Reset after editing
+    } else {
+      // Add new job
+      const newJob = {
+        ...job,
+        id: nextJobId,
+      };
+      setJobs([...jobs, newJob]);
+      setJobNextId(nextJobId + 1); // Increment the counter after adding a new job.
+    }
+  };
+
+  const editJob = (job) => {
+    console.log(job);
+    setCurrentJob(job); // Set the job to be edited
+  };
+
+  const deleteJob = (id) => {
+    setJobs(jobs.filter((job) => job.id !== id));
+    if (currentJob && currentJob.id === id) {
+      setCurrentJob(null); // Reset currentJob if the deleted education was being edited
+    }
+  };
 
   return (
     <section className="main-sec">
@@ -72,7 +126,9 @@ function App() {
           addEducation={addEducation}
           currentEducation={currentEducation}
         />
+        <JobInput addJob={addJob} currentJob={currentJob} />
       </div>
+
       <div className="outputs-wrapper">
         <h1>MY CV</h1>
         <Header name={name} email={email} phone={phone} />
@@ -81,6 +137,7 @@ function App() {
           onEdit={editEducation}
           onDelete={deleteEducation}
         />
+        <JobOutput jobs={jobs} onEdit={editJob} onDelete={deleteJob} />
       </div>
     </section>
   );

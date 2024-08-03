@@ -65,11 +65,11 @@ function EducationInput({ addEducation, currentEducation }) {
           />
         </div>
         <div className="input-block">
-          <label htmlFor="dateFinish">Date finished: </label>
+          <label htmlFor="date-education">Date finished: </label>
           <input
             type="date"
-            name="dateFinish"
-            id="dateFinish"
+            name="date-education"
+            id="date-education"
             value={date}
             onChange={(e) => setDate(e.target.value)}
           />
