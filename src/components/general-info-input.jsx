@@ -1,12 +1,19 @@
 /* eslint-disable react/prop-types */
 
-function GeneralInfoInput({ setName, setEmail, setPhone }) {
+function GeneralInfoInput({
+  setName,
+  setEmail,
+  setPhone,
+  infoProvided,
+  updateInfoProvided,
+}) {
   // Receive setName as a prop
   const handleSubmit = (e) => {
     e.preventDefault();
     setName(document.getElementById("name").value); // Update the name state in the parent
     setEmail(document.getElementById("email").value);
     setPhone(document.getElementById("phone").value);
+    updateInfoProvided(true);
   };
 
   return (
@@ -25,7 +32,7 @@ function GeneralInfoInput({ setName, setEmail, setPhone }) {
           <label htmlFor="phone">Phone: </label>
           <input type="tel" name="phone" id="phone" />
         </div>
-        <button type="submit">Submit</button>
+        <button type="submit">{infoProvided ? "Update" : "Submit"}</button>
       </form>
     </div>
   );

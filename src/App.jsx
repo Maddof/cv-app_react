@@ -14,6 +14,8 @@ function App() {
   const [email, setEmail] = useState("deductivo@ded.com");
   const [phone, setPhone] = useState("073-6633200");
 
+  const [infoProvided, updateInfoProvided] = useState(false);
+
   // Education input states
   const [educations, setEducations] = useState([
     {
@@ -57,7 +59,9 @@ function App() {
 
   const deleteEducation = (id) => {
     setEducations(educations.filter((education) => education.id !== id));
-    setCurrentEducation(null);
+    if (currentEducation && currentEducation.id == id) {
+      setCurrentEducation(null);
+    }
   };
 
   // Job input states
@@ -121,6 +125,8 @@ function App() {
           setName={setName}
           setEmail={setEmail}
           setPhone={setPhone}
+          updateInfoProvided={updateInfoProvided}
+          infoProvided={infoProvided}
         />
         <EducationInput
           addEducation={addEducation}
